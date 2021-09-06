@@ -75,7 +75,7 @@ const ContributionCard = ({ contribution, fullName, imageLink, devUser, url, url
   let completedText = '';
   let completedDate = '';
   let featureLiveOnText = '';
-  let featurLiveDate = '';
+  let featureLiveDate = '';
 
   if (isTitleAvailable) {
     if (status === 'Active') {
@@ -84,8 +84,8 @@ const ContributionCard = ({ contribution, fullName, imageLink, devUser, url, url
     } else {
       completedDate = timeWas(endsOn * 1000);
       completedText = <span>Completed in: </span>;
-      featurLiveDate = timeWas(endsOn * 1000, true);
-      featureLiveOnText = `Feature live on ${featurLiveDate}`;
+      featureLiveDate = timeWas(endsOn * 1000, true);
+      featureLiveOnText = featureLiveDate;
     }
   } else {
     const createdAt = +new Date(prList[0]['createdAt']);
@@ -93,8 +93,8 @@ const ContributionCard = ({ contribution, fullName, imageLink, devUser, url, url
     if (prList[0]['state'] === 'closed') {
       completedDate = timeWas(createdAt, false, updatedAt);
       completedText = <span className={classNames.completedText}>Completed in </span>;
-      featurLiveDate = timeWas(updatedAt, true);
-      featureLiveOnText = `Feature live on ${featurLiveDate}`;
+      featureLiveDate = timeWas(updatedAt, true);
+      featureLiveOnText = featureLiveDate;
     }
   }
   return (
@@ -107,7 +107,9 @@ const ContributionCard = ({ contribution, fullName, imageLink, devUser, url, url
             {completedText}
             <p className={classNames.completedDate}>{completedDate}</p>
           </div>
-          <div className={classNames.featureLiveOnText}>{featureLiveOnText}</div>
+          <div className={classNames.featureLiveOnText}>
+            {featureLiveOnText && <span>Feature live on {featureLiveOnText}</span>}
+          </div>
         </div>
         <div className={classNames.rightSection}>
           <div className={classNames.prLink}>{renderPRLinks(prList)}</div>
